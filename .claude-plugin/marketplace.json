@@ -1,0 +1,14 @@
+{
+  "name": "garriock-figma-handoff",
+  "description": "Document coded prototypes in Figma for developer handoff.",
+  "owner": {
+    "name": "Glenn Garriock"
+  },
+  "plugins": [
+    {
+      "name": "figma-handoff",
+      "source": "./plugins/figma-handoff",
+      "description": "Document coded prototypes in Figma with clean, honest developer handoff files."
+    }
+  ]
+}
