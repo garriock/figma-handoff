@@ -45,12 +45,12 @@ Use a step-by-path matrix instead of rows when the feature branches heavily by c
 
 Figma shows a label for every frame, instance and component that sits directly under a section or the page. Those labels scale with zoom, so use them as the descriptions, and name these nodes in plain words. Framed text adds a second label that collides with everything around it at 100%, so any other text must be a plain text node, never framed or grouped.
 
-- One caption per screen. Its title is the screen frame's name, such as "Order confirmed, row", in six words or fewer. Its body, if it needs one, is at most one sentence in a plain text node 16 below the screen.
+- One caption per screen. Its title is the screen frame's name, such as "Results, filtered", in six words or fewer. Its body, if it needs one, is at most one sentence in a plain text node 16 below the screen.
 - At most three margin notes per row. Needing more usually means a screen isn't doing its job.
 - A pointer cursor on the click target of each screen that leads to the next, including dismiss and close actions. Use the project's cursor component if it has one, placed inside the screen frame so it gets no label. Cursors are the one thing that sits on the UI, and they must look like cursors rather than badges.
 - No other documentation sits on top of the UI.
 - No pixel values, code paths, or question marks on flow screens.
-- If a to-decide item could remove a screen, say so in that screen's caption. For example, "V2 if direct link."
+- If a to-decide item could remove a screen, say so in that screen's caption. For example, "Later phase if the simpler option wins."
 - Mark simulations as simulated in the caption. Don't leave that to an annotation.
 
 Move everything else to the inventory.
