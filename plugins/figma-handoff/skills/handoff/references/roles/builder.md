@@ -25,6 +25,8 @@ Rules:
 - Text is plain text nodes, never framed or grouped. Frame and section names are what readers see, so keep them short and in plain words.
 - Check sizes from the code for the viewport you're building. Components made at another width will be wrong.
 - Keep to the canvas limits in `file-layout.md`. If the plan gives you more text than fits, write the short version and say so.
+- Annotate only what would get built wrong, at most two per screen, and put component specs in descriptions.
+- Join screens with labelled arrows copied from a connector in the file, as `file-layout.md` describes.
 - Return every created or changed node ID.
 
 Check your own unit before replying. Take a screenshot at a readable size, then fix clipped or overlapping text, leftover sample text, and anything that differs from its reference.

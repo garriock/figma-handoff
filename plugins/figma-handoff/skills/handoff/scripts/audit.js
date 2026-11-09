@@ -87,6 +87,24 @@ function overlaps(page) {
   return found;
 }
 
+// Annotations per screen in scenario rows, and on components. Rows should carry only exceptions.
+function annotationLoad(page) {
+  const perScreen = [];
+  let onComponents = 0;
+  let total = 0;
+  for (const holder of page.children.filter((n) => n.type === 'SECTION')) {
+    for (const top of holder.children) {
+      if (!('findAll' in top)) continue;
+      const nodes = [top, ...top.findAll((n) => 'annotations' in n && n.annotations.length > 0)];
+      const count = nodes.reduce((sum, n) => sum + (('annotations' in n && n.annotations) ? n.annotations.length : 0), 0);
+      total += count;
+      if (top.type === 'COMPONENT' || top.type === 'COMPONENT_SET') onComponents += count;
+      else if (count > 0) perScreen.push([top.id, count]);
+    }
+  }
+  return { total, onComponents, maxPerScreen: Math.max(0, ...perScreen.map(([, c]) => c)), screensOverTwo: perScreen.filter(([, c]) => c > 2).map(([id]) => id) };
+}
+
 function leftEdges(page) {
   return [...new Set(page.children.filter((n) => n.type === 'SECTION').map((n) => Math.round(n.x)))];
 }
@@ -115,6 +133,9 @@ for (const page of pages) {
     labelNoise: labelNoise(page).slice(0, 50),
     overlappingSections: overlaps(page),
     sectionLeftEdges: leftEdges(page),
+    sectionWidths: [...new Set(page.children.filter((n) => n.type === 'SECTION' && n.getSharedPluginData('handoff', 'kind') !== 'components').map((n) => Math.round(n.width)))],
+    annotations: annotationLoad(page),
+    flowConnectors: page.findAll((n) => n.type === 'CONNECTOR').length,
   });
 }
 return results;

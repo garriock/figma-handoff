@@ -38,8 +38,9 @@ Where a prototype runs, separate three levels of evidence:
 ## Where they go
 
 - The inventory holds all ten.
-- Native annotations in the Accessibility category hold the exceptions, starting with `A11Y:`.
-- Focus order, only when it needs explaining, gets a separate overlay: a duplicate frame with `Doc/Focus` markers outside the design's own layers, placed outside the scenario rows. Keep one or two annotation types per overlay.
+- An accessibility row, after the scenario rows, holds a focus order overlay: a duplicate of the key screen with `Doc/Focus` markers outside the design's own layers.
+- One native annotation on that overlay, in the Accessibility category and starting with `A11Y:`, lists the gaps to fix rather than copy, one line each. Flow screens stay free of accessibility annotations, so they don't bury the warnings about mocks and stubs.
+- If nothing needs a focus order, put the one annotation on the most affected screen instead.
 
 People on View seats can't see native annotations, so point them to the inventory.
 

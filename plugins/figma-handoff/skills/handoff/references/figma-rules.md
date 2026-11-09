@@ -52,7 +52,10 @@ Figma limits MCP calls by seat, and a limit error stops the whole run. A Full se
 | Images | `use_figma` can't fetch images. Build the frame, then call `upload_assets` with those node IDs. Omitting them drops loose frames on the page |
 | Reusing images | Upload once, read `imageHash` from the fill, and reuse it on other nodes |
 | Versions | Named versions can't be saved through the API. Use the change log and ask the user to save one |
-| Flow lines | `createConnector` doesn't exist in design files, so draw lines |
+| Flow arrows | `createConnector` doesn't exist in design files, but an existing connector can be copied with `clone()`. Move the copy into the row's section with `appendChild`, then set `connectorStart` and `connectorEnd` to `{ endpointNodeId, magnet }` and the label with `text.characters`, after loading `text.fontName`. If the file has no connector, ask the user to place one FigJam arrow, and keep one in the file, because deleting the last one leaves nothing to copy |
+| Arrow routes | Use `connectorLineType = 'STRAIGHT'` from the `RIGHT` magnet of one screen to the `LEFT` of the next. Elbow routes with a label can detour far around the screens, and arrows started from a small layer such as a cursor route across the UI |
+| Annotation write-back | Annotations read back with both `label` and `labelMarkdown`, but writing both fails validation. To keep some, map each to one of the two, plus `properties` and `categoryId` |
+| Descriptions | `description` reads back HTML-escaped. Unescape it before appending and writing it back, or every round trip escapes it again |
 | Feature checks | Reading a missing `figma` property throws, even with `typeof`. Wrap each check in `try` so one gap doesn't stop the script |
 | Library search | `search_design_system` can be limited, at about 20 queries a call. Fall back to reading the library file directly |
 | Library lists | `get_libraries` can miss libraries that still import by key |
@@ -67,8 +70,8 @@ Call `listAvailableFontsAsync()` before `loadFontAsync()`, and check for missing
 Tested through `use_figma` on a Full seat on an Organization plan:
 
 - **Annotations work** on frames and child layers, and they reach coding agents. `get_design_context` returns them as `data-annotations`, or `data-development-annotations` for the Development category, including on children of the node requested. Put the meaning in `label`, and set the matching category.
-- **Use `properties` for specs.** Pinned properties show live values and tokens, so prefer them to typing numbers into a label.
-- **Annotations stay on the node they're set on.** Layers inside instances can hold their own, but instances don't inherit a master's. Put specs on the master, and put notes about one screen on that screen's instance.
+- **Put component specs in descriptions, not annotations.** A component's description shows in Dev Mode on every instance and reaches coding agents. Pinned `properties` only repeat what Dev Mode shows on inspect, so don't add them.
+- **Annotations stay on the node they're set on.** Layers inside instances can hold their own, but instances don't inherit a master's. Put notes about one screen on that screen's instance.
 - **Measurements work** through `addMeasurement` in the design editor, on layers and inside instances.
 - **Get categories** from `figma.annotations.getAnnotationCategoriesAsync()`. Don't assume IDs across files.
 - **`devStatus` can't be written.** The API refuses it, so a person has to mark Ready for dev. Don't offer to do it.

@@ -38,7 +38,7 @@ Inspect the file, pick a mode, say which in one line and continue unless correct
 
 | Mode | When | Rules |
 |---|---|---|
-| **New** | The file is empty or a fresh duplicate | Create the default page set |
+| **New** | The file is empty or a fresh duplicate | Create the default page |
 | **Add** | The file already has work | Follow the file's conventions. Never move, rename or delete work you didn't create |
 | **Update** | This skill documented the feature before | Compare the pinned commit with the current one. Change only skill-owned nodes and affected screens, move superseded work to a section named Superseded, and add a change log entry |
 
@@ -62,6 +62,8 @@ Check for these tools and report anything missing in plain language:
 Load `figma-use` before any `use_figma` call, and `figma-generate-design` before building screens, from the Figma plugin or through `get_figma_skill`. If neither route works, stop and explain that Figma's skills are required.
 
 Confirm write access early with `whoami`. Annotations need a paid plan and a Full seat, and Completed status needs a higher plan. Figma also caps MCP calls by seat, and a run can hit that limit, so read the call budget in [figma-rules.md](references/figma-rules.md) before starting. If something is unavailable, adapt and tell the user. If the file is shared, offer to work on a duplicate.
+
+Flow arrows are copied from a connector already in the file, because Figma's tools can't create one. If the file has none, ask the user to place one FigJam arrow on the page now, so it's there when the rows are built.
 
 **Stop if** write access is missing or no target file is named.
 
@@ -93,7 +95,7 @@ Then write the plan and show the user a summary of ten lines at most: scenarios,
 
 ### 6. Build
 
-Read [file-layout.md](references/file-layout.md), [style.md](references/style.md) and [figma-rules.md](references/figma-rules.md). Build in this order: page set, brief, custom components, first scenario row. Review that first, because mistakes are cheapest to fix here. Then build the remaining rows.
+Read [file-layout.md](references/file-layout.md), [style.md](references/style.md) and [figma-rules.md](references/figma-rules.md). Build in this order: brief, key components, first scenario row. Review that first, because mistakes are cheapest to fix here. Then build the remaining rows.
 
 Run one [builder](references/roles/builder.md) at a time. Concurrent writers race on positions and node IDs. Use `scripts/doc-kit.js` for documentation chrome, so every unit looks the same.
 
@@ -138,9 +140,11 @@ Details that readers don't need in order to build belong in this reply and the r
 |---|---|---|
 | Colour, spacing, type | Bound variables and styles | Nothing extra. Dev Mode shows them |
 | Component props and defaults | Code and Code Connect | A link at most |
-| Reality and confidence labels | Inventory | One compact line in the brief, plus a `MOCK:` or `STUB:` annotation on affected nodes |
-| Behaviour rules | Inventory | A caption, a margin note or a native annotation |
-| Accessibility | Inventory | Native annotations, and a separate overlay for focus order |
+| Component specs | Inventory | The component's description, with a short Specs list |
+| Reality and confidence labels | Inventory | One compact line in the brief, plus a `MOCK:`, `STUB:`, `HARDCODED:` or `NOT BUILT:` annotation on the affected control. These are the only annotations on flow screens, at most two per screen |
+| Behaviour rules | Inventory | The screen's caption or a margin note |
+| Flow between screens | Scenarios | A labelled arrow from one screen to the next |
+| Accessibility | Inventory | A focus order overlay with one annotation listing the gaps |
 | Open questions with defaults | Brief | The to-decide list, once |
 | Code paths, test IDs | Inventory | Never on the canvas |
 | Audit numbers, app bugs, drift | Your reply and the run folder | Never on the canvas |

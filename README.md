@@ -14,10 +14,13 @@ Most handoff advice assumes design comes first. With a prompt-built prototype, t
 
 **In Figma**
 
-- A cover showing name, owner, status and date.
-- A one-page brief with the reality summary and open decisions.
-- One section per user scenario, holding editable screens built from your components where you have them.
-- Native annotations and measurements for mocks, behaviour, accessibility and component specs.
+One page on a dark canvas, readable by zooming out:
+
+- A brief on the left, with the reality summary and open decisions.
+- One row per user scenario, holding editable screens built from your components where you have them, with a one-line caption under each.
+- Labelled arrows from each screen to the next, naming the action.
+- Key components on the right, with their specs in each component's description, so Dev Mode shows them on every instance.
+- A few native annotations, only where something is faked or missing and would get built wrong. Accessibility gaps go in one annotation on a focus order row.
 - Nothing drawn over your UI except cursors. Figma's own frame labels carry the titles.
 
 **In your repo**
@@ -68,7 +71,7 @@ It only runs when you call it, because it writes to shared files. It will ask wh
 
 - `use_figma` is in beta, so expect some manual cleanup.
 - Native annotations don't reach people on View seats, and plain canvas text may not reach coding agents. The inventory covers both gaps.
-- Instances don't inherit annotations from their main component, so component specs are found on the component, not on each screen.
+- Figma's tools can't create arrows in a design file, only copy one. If the file has none, it asks you to place one FigJam arrow first, or falls back to plain lines.
 - Figma limits MCP calls by seat. A 14-screen file took about 30 calls, but other sessions on the same account share the allowance.
 - Figma's tools can't set Ready for dev status, add dev resource links or save named versions.
 - The audit reports numbers rather than pass or fail, because there are no reliable thresholds yet.
