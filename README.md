@@ -16,12 +16,26 @@ Most handoff advice assumes design comes first. With a prompt-built prototype, t
 
 One page on a dark canvas, readable by zooming out:
 
-- A brief on the left, with the reality summary and open decisions.
-- One row per user scenario, holding editable screens built from your components where you have them, with a one-line caption under each.
-- Labelled arrows from each screen to the next, naming the action.
-- Key components on the right, with their specs in each component's description, so Dev Mode shows them on every instance.
-- A few native annotations, only where something is faked or missing and would get built wrong. Accessibility gaps go in one annotation on a focus order row.
-- Nothing drawn over your UI except cursors. Figma's own frame labels carry the titles.
+```text
+┌─────────┐   ┌───────────────────────────────────────┐   ┌──────────────────┐
+│  Brief  │   │ Member opens the menu · Reference     │   │  Key components  │
+│         │   │  [screen] ─ Clicks ─▶ [screen]        │   │  packed columns  │
+│         │   └───────────────────────────────────────┘   └──────────────────┘
+└─────────┘   ┌───────────────────────────────────────┐   ┌──────────────────┐
+              │ Member invites a colleague · Reference│   │  Screen parts    │
+              │  [screen] ─ Sends ─▶ [screen]         │   │  packed columns  │
+              └───────────────────────────────────────┘   └──────────────────┘
+              ┌───────────────────────────────────────┐
+              │ Focus order                           │
+              └───────────────────────────────────────┘
+```
+
+- **Brief,** a white card on the left: who it's for, what is real and what is faked, what it does, and up to seven open decisions with defaults.
+- **Scenario rows** in the middle, one per user situation. They hold editable screens built from your components where you have them, with a one-line caption under each and plenty of space between.
+- **Labelled arrows** from each screen to the next, naming the action, such as "Clicks the row".
+- **Key components and Screen parts** on the right, packed into compact columns. Specs live in each component's description, so Dev Mode shows them on every instance.
+- **A few native annotations,** only where something is faked or missing and would get built wrong, and at most two per screen. Accessibility gaps go in one annotation on the focus order row.
+- **Nothing drawn over your UI** except cursors. Figma's own frame labels carry the titles.
 
 **In your repo**
 
@@ -39,12 +53,25 @@ claude plugin marketplace add garriock/figma-handoff
 claude plugin install figma-handoff@garriock-figma-handoff
 ```
 
+To get a newer version later:
+
+```bash
+claude plugin marketplace update garriock-figma-handoff
+```
+
+```bash
+claude plugin update figma-handoff@garriock-figma-handoff
+```
+
+Restart Claude Code afterwards. See [CHANGELOG.md](CHANGELOG.md) for what changed.
+
 ## Requirements
 
 - Claude Code, with subagents available for an independent review.
 - The [Figma MCP server](https://developers.figma.com/docs/figma-mcp-server/) with write access (`use_figma`).
 - Figma's skills, from the Figma plugin or served by the MCP server.
 - A paid Figma plan and a Full seat for writing outside drafts and for creating annotations. Viewing annotations needs a Full or Dev seat.
+- For flow arrows, one FigJam arrow on the page. The plugin asks for it if the file has none.
 
 Capture tools are optional, since they vary by client.
 
