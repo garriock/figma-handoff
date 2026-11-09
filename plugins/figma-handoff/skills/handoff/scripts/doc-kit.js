@@ -261,15 +261,37 @@ function scenarioRow(title, status, x, y, width, height) {
   return section;
 }
 
-// A white section on the right of the rows for key components and screen parts.
+// A compact panel on the right of the rows for key components or screen parts.
 function componentsSection(name, x, y) {
   const section = figma.createSection();
   section.name = name;
   section.x = x;
   section.y = y;
-  section.fills = solid(SURFACE);
+  section.fills = solid(ROW_BG);
   section.setSharedPluginData('handoff', 'owner', 'skill');
   section.setSharedPluginData('handoff', 'kind', 'components');
+  return section;
+}
+
+// Packs a component panel into columns. columns is an array of arrays of nodes, one per group.
+function packColumns(section, columns, pad = 80, itemGap = 160, columnGap = 240) {
+  let x = pad;
+  let right = 0;
+  let bottom = 0;
+  for (const column of columns) {
+    let y = pad;
+    let width = 0;
+    for (const node of column) {
+      node.x = x;
+      node.y = y;
+      y += node.height + itemGap;
+      width = Math.max(width, node.width);
+      bottom = Math.max(bottom, node.y + node.height);
+    }
+    right = x + width;
+    x += width + columnGap;
+  }
+  section.resizeWithoutConstraints(right + pad, bottom + pad);
   return section;
 }
 

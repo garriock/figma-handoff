@@ -8,7 +8,7 @@ Put the whole feature on one page, so a reader can find everything by zooming ou
 
 1. **Brief** on the left, as a white card.
 2. **Scenario rows** in the middle, stacked down one left edge.
-3. **Key components** on the right, as a white section, with any screen parts below it.
+3. **Key components** on the right, with **Screen parts** below them. Both are compact panels, described under Component panels.
 
 Add a page only for a second milestone or platform, or an Archive when there is something to archive. Exploration stays with the designer. If a capture has to sit on the canvas, use a temporary `Reference` page and delete it before handover.
 
@@ -90,6 +90,15 @@ A library component gets a link. A component no library covers goes in the Key c
 - The variants laid out.
 - A **description** on the component or component set: what it is in code, then a `Specs` list with one line per part, such as "Close: No fill. Sits right-3, top-3." Descriptions show in Dev Mode on every instance and reach coding agents, while annotations stay on the main component.
 - Native measurements for the two or three spacing values that matter.
+
+## Component panels
+
+Key components and Screen parts hold reference material, not a story, so pack them tightly rather than spacing them like rows:
+
+- The same dark fill as the rows, 640 to the right of them. Screen parts sit 450 below Key components.
+- Group parts into columns: the shell in one, each screen's parts in their own, the larger components in another. Stack items in a column 160 apart, and keep about 240 between columns.
+- 80 of padding, and fit the section to its contents, so no empty area is left over.
+- Sizes vary, so put the widest items in their own column rather than letting them set the width of a row.
 
 Don't draw anatomy diagrams, numbered markers or spec tables, and don't annotate component parts. A drawn spec is a second copy that drifts. The same values also go in the inventory, for people on View seats.
 

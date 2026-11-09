@@ -9,7 +9,7 @@ Placement does more for a clean look than any palette. Get that right first.
 | Area | Rule |
 |---|---|
 | Canvas | Dark by default: page `#1E1E1E`, scenario rows `#444444`. Bright screens stand out and the chrome recedes. Match the file if it has its own convention |
-| Cards | The brief and the Key components section are white, with a radius of 24. They read as documents on the dark canvas |
+| Cards | The brief is a white card with a radius of 24, so it reads as a document on the dark canvas. Component panels use the row fill |
 | Placement | Documentation sits outside the frame, never on the UI |
 | Labels | Figma's frame and section labels carry the titles. Other text is plain text nodes with no frame or group |
 | Type | One neutral sans and one matching mono. Section headings semibold with slight negative tracking. Everything else regular, 12 to 14px at 100% zoom |
