@@ -105,6 +105,22 @@ function annotationLoad(page) {
   return { total, onComponents, maxPerScreen: Math.max(0, ...perScreen.map(([, c]) => c)), screensOverTwo: perScreen.filter(([, c]) => c > 2).map(([id]) => id) };
 }
 
+// Frames named like controls or containers that aren't library instances. These are candidates,
+// not failures: a tab panel or a justified custom part will show up too. Check each one against
+// the library-first table in design-system.md.
+const CONTROL_NAME = /\b(button|close|dismiss|menu|dropdown|dialog|modal|sheet|drawer|card|toast|badge|input|tab|tooltip|popover|select|checkbox|switch|avatar)\b/i;
+function handBuiltControls(page) {
+  const found = [];
+  for (const n of page.findAll((x) => x.type === 'FRAME' && CONTROL_NAME.test(x.name))) {
+    let insideInstance = false;
+    for (let p = n.parent; p && p.type !== 'PAGE'; p = p.parent) if (p.type === 'INSTANCE') { insideInstance = true; break; }
+    if (insideInstance || isDoc(n)) continue;
+    if (n.parent && n.parent.type === 'SECTION') continue; // Screens and cards on the canvas, not controls.
+    found.push(`${n.id} ${n.name}`);
+  }
+  return found;
+}
+
 function leftEdges(page) {
   return [...new Set(page.children.filter((n) => n.type === 'SECTION').map((n) => Math.round(n.x)))];
 }
@@ -136,6 +152,7 @@ for (const page of pages) {
     sectionWidths: [...new Set(page.children.filter((n) => n.type === 'SECTION' && n.getSharedPluginData('handoff', 'kind') !== 'components').map((n) => Math.round(n.width)))],
     annotations: annotationLoad(page),
     flowConnectors: page.findAll((n) => n.type === 'CONNECTOR').length,
+    handBuiltControls: handBuiltControls(page).slice(0, 50),
   });
 }
 return results;

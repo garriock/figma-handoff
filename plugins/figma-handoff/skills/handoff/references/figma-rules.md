@@ -46,6 +46,8 @@ Figma limits MCP calls by seat, and a limit error stops the whole run. A Full se
 | Sections | Sections don't auto-layout. Position children by hand, resize, and restack sections at the end |
 | Sizing | `resize()` resets sizing modes, so call it before setting hug or fill |
 | Overrides | Instance children can't be moved. Add or swap a variant instead of fighting the override |
+| Slots | A library component's native `SLOT` layer takes content with `appendChild`. Set the inner content to fill. An instance-swap slot needs a component, so make a small local content component and set it with `setProperties` |
+| Moving to a container | Swapping an instance to a restructured component drops its variant, text and annotation overrides. Record them first, swap, then write them back in the next call |
 | Swaps and annotations | Swapping an instance, by hand or with `swapComponent`, drops the annotations on the layers it replaces, with no warning. Snapshot before and after, and put them back |
 | Swaps | `swapComponent` can reset text. Capture strings first and write them back. Read the nested tree in the next call, because it stays stale until then. Nested variant overrides can stay on the old master, so swap nested instances directly |
 | Text in instances | Text can keep a stale height. Re-set the text to force a reflow |

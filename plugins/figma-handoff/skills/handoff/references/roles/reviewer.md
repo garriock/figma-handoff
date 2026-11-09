@@ -25,6 +25,7 @@ Report only what affects accuracy or usability, most severe first:
 - **Flaws copied as design,** such as clipped content or nested scrollers.
 - **Clutter,** which counts as a defect. This includes a brief over one page, too many bullets, decisions, captions or notes, drawn tables or redlines, code paths on the canvas, more than two annotations on a screen, annotations that aren't about something being faked or missing, or a spec annotation that belongs in a component description. Name the node and say what to cut. Never ask for more text, because extra detail belongs in the inventory.
 - **Label noise.** Look at each row at 100%. Any frame label that is a layer name rather than plain words, framed text, or labels colliding with content. Row titles repeated as text.
+- **Local parts the library covers.** A local component or hand-built frame where the library has the component, including containers and close or dismiss buttons. Name the library component to use.
 - **Craft problems:** leftover sample text, overflow, overlaps, misaligned rows, notes on top of the UI, or default layer names.
 
 Return your report in your reply. For each finding, give the node ID, problem, evidence and fix. Say what you checked in clean areas. Keep it under 60 lines. Say "No accuracy or usability gaps found" only if that is true after checking everything in scope.

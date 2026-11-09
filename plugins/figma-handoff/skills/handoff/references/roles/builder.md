@@ -18,7 +18,7 @@ Before your first write, read:
 Rules:
 
 - Inspect the page first. Never move, rename or delete work you didn't create.
-- Build screens from linked instances. Draw by hand only what no library covers, and say so in the layer name.
+- Build screens from linked instances. Check the library-first table in `design-system.md` before making anything local: a component with a match is always the library one, even when the code restyles it, and custom content goes in the slot of the library container the code uses. Draw by hand only what no library covers, and say so in the layer name and description.
 - Bind colours, spacing, radius and text to the design system. Follow the join table, and don't guess at a token.
 - Use copy exactly as it appears in the inventory, and real content instead of sample text.
 - Set images with `upload_assets` and target node IDs.

@@ -40,6 +40,19 @@ A name proposes and a value confirms. The same name can hold different values in
 
 For components, Code Connect is the strongest evidence. Without it, compare names and props, and flag the match as unconfirmed.
 
+## Library first
+
+Every element on a screen is a library instance unless no library component fits. Make the check explicit, because a prototype's custom styling makes library components look custom:
+
+1. **List what the code imports** from the design system package: every component, including containers such as Dialog, Drawer, Card and DropdownMenu. This is the checklist.
+2. **Search the Figma library for each one** with `search_design_system`, by the code's own name, scoped to the file's libraries. Batch the queries. Record the library key, or "none", for each in `design-system.md`.
+3. **A component with a custom className is still that component.** `<Button variant="ghost" className="h-11 rounded-full">` is the library Ghost button with overrides. Use the library component, set its props and variants, and record the className difference in the inventory. Don't build a local lookalike.
+4. **Build custom parts on library containers.** If the code wraps custom content in a design system Dialog, Drawer, Card or Menu, use that container and put the custom content in its slot. Slots take content directly, and swap slots take a small local content component.
+5. **Small controls too.** Close, dismiss and icon buttons are library buttons, not frames with an icon in them.
+6. **A local component is a last resort.** Make one only when the search found nothing, and say what was searched for in its description.
+
+When the library's version looks different from the prototype, such as a different close button, use the library's and list the difference as a decision. Don't copy the prototype's styling onto a library component.
+
 Read a component's defaults from its source, not just the props passed at the call site. A wrong variant is easy to miss.
 
 ## Report drift

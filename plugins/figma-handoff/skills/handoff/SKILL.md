@@ -91,6 +91,8 @@ Read [design-system.md](references/design-system.md). Look in code and in Figma 
 
 Propose matches by code syntax, then by normalised name. Confirm each by resolved value in each mode. Record the method and confidence, and report drift.
 
+Then run the library-first check in [design-system.md](references/design-system.md): search the library for every component the code imports, containers included, and record a match or "none" for each. The builder may not create a local component for anything that has a match.
+
 **Stop if** names and values disagree on something that affects the screens, or several tokens share a value and you can't tell which is meant.
 
 ### 5. Inventory the prototype

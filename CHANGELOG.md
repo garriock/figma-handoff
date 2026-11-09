@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0, 9 November 2026
+
+### Added
+
+- A library-first check before building: every component the code imports, containers included, is searched for in the Figma library and recorded. A component restyled with a className is still the library component, custom content goes in the library container's slot, and close and dismiss buttons are library buttons.
+- The audit lists hand-built frames named like controls or containers, as candidates to check against the library.
+- The reviewer flags local parts the library covers.
+- Field rules for library slots, and for moving instances to a restructured component without losing overrides.
+
 ## 0.3.0, 9 November 2026
 
 ### Added

@@ -85,7 +85,7 @@ Annotations are for one thing on flow screens: **what would get built wrong if s
 
 ## Custom components
 
-A library component gets a link. A component no library covers goes in the Key components section, named so it can move into the system later. Keep these key components apart from layout scaffolding such as app shells:
+A library component gets a link. Check the library-first table in [design-system.md](design-system.md) before making anything local: custom content goes in the slot of the library container the code uses, such as Dialog or Drawer. A component no library covers goes in the Key components section, named so it can move into the system later. Keep these key components apart from layout scaffolding such as app shells:
 
 - The variants laid out.
 - A **description** on the component or component set: what it is in code, then a `Specs` list with one line per part, such as "Close: No fill. Sits right-3, top-3." Descriptions show in Dev Mode on every instance and reach coding agents, while annotations stay on the main component.
