@@ -36,15 +36,23 @@ Document one feature per run.
 
 Inspect the file, pick a mode, say which in one line and continue unless corrected.
 
+In Update mode, run `scripts/snapshot.js` through a read-only `use_figma` call, then `scripts/figma_diff.py <old snapshot> <new snapshot>`. Document every finding before anything else:
+
+- **Swapped control:** check it against the code. If the design now differs, say so in an annotation on the control and in the inventory's Components table, and say which one to build.
+- **Lost annotation:** swaps drop annotations on the layers they replace. Put it back on the new control if it still applies.
+- **Unused variant:** it may describe something that no longer exists. Remove it if this skill made it, and update any description that names it.
+
+The designer's change wins over the code unless they say otherwise. Record it as a design decision, not as drift.
+
 | Mode | When | Rules |
 |---|---|---|
 | **New** | The file is empty or a fresh duplicate | Create the default page |
 | **Add** | The file already has work | Follow the file's conventions. Never move, rename or delete work you didn't create |
-| **Update** | This skill documented the feature before | Compare the pinned commit with the current one. Change only skill-owned nodes and affected screens, move superseded work to a section named Superseded, and add a change log entry |
+| **Update** | This skill documented the feature before | Compare the pinned commit with the current one, **and** compare the Figma file with the last snapshot, because designers change the file too. Change only skill-owned nodes and affected screens, move superseded work to a section named Superseded, and add a change log entry |
 
 ## Run folder
 
-Keep state in `<repo>/.handoff/<feature-slug>/`, and add `.handoff/` to `.gitignore` if the user agrees. It holds the plan, reference captures, `state.json` and `progress.md`. Re-read `progress.md` and run `scripts/run_state.py report` after any context compaction.
+Keep state in `<repo>/.handoff/<feature-slug>/`, and add `.handoff/` to `.gitignore` if the user agrees. It holds the plan, reference captures, `state.json`, `progress.md` and `figma-snapshot.json`. Re-read `progress.md` and run `scripts/run_state.py report` after any context compaction.
 
 The inventory is the one lasting output in the repo: `docs/handoff/<feature-slug>/inventory.md`. Write it, but leave committing to the user.
 
@@ -128,6 +136,7 @@ If subagents aren't available, do the work in sequence and tell the user that th
 ### 9. Hand over
 
 - Save the inventory to the repo.
+- Run `scripts/snapshot.js` and save the result to the run folder as `figma-snapshot.json`, so the next run can see what changed in Figma.
 - Add the visible change log entry. The API can't save a named version, so ask the user to save one.
 - Leave Ready for dev to a person. It is an approval, and `use_figma` can't set it anyway. Say which sections are ready to be marked.
 - Reply with the file link and a short report: what was built, the audit numbers, drift, the reality summary, open decisions, and anything you could not do. Add a suggested walkthrough prompt for the designer and engineer.

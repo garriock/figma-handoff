@@ -85,7 +85,7 @@ Capture tools are optional, since they vary by client.
 /figma-handoff:handoff https://www.figma.com/design/abc/Checkout src/app/checkout Prototype for review on Friday
 ```
 
-It only runs when you call it, because it writes to shared files. It will ask whether the prototype is a **Reference**, a **Spec** or a **Candidate for production**. It works on a new file, adds to an existing one, or updates documentation after the code changes.
+It only runs when you call it, because it writes to shared files. It will ask whether the prototype is a **Reference**, a **Spec** or a **Candidate for production**. It works on a new file, adds to an existing one, or updates documentation after the code changes. On an update it also compares the file with its last snapshot, so changes you make in Figma, such as swapping a button for a library component, get documented too.
 
 ## What it won't do
 

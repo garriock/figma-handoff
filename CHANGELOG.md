@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0, 9 November 2026
+
+### Added
+
+- Update runs compare the Figma file with a snapshot from the last run, so a designer's changes get documented. `snapshot.js` records each screen's and component's controls and annotations, and `figma_diff.py` reports swapped controls, lost annotations and variants that became unused.
+
+### Fixed
+
+- A swapped instance silently lost its annotations, and the swap went undocumented when it happened inside a shared component.
+
 ## 0.2.1, 9 November 2026
 
 ### Changed

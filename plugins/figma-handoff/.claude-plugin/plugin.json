@@ -1,6 +1,6 @@
 {
   "name": "figma-handoff",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Document coded prototypes in Figma with clean, honest developer handoff files.",
   "author": {
     "name": "Glenn Garriock"
