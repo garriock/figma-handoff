@@ -15,6 +15,7 @@ Sources:
 - Reference captures in `{run_folder}/refs/`, if there are any.
 - `references/file-layout.md` and `references/style.md`.
 - Decisions the user already made, which you should flag only if they're factually wrong: {decisions}.
+- In a second round, the fixes made after the first: {fixes}. Check that each one held, then spend most of your effort on anything new.
 
 Report only what affects accuracy or usability, most severe first:
 
@@ -28,4 +29,4 @@ Report only what affects accuracy or usability, most severe first:
 - **Local parts the library covers.** A local component or hand-built frame where the library has the component, including containers and close or dismiss buttons. Name the library component to use.
 - **Craft problems:** leftover sample text, overflow, overlaps, misaligned rows, notes on top of the UI, or default layer names.
 
-Return your report in your reply. For each finding, give the node ID, problem, evidence and fix. Say what you checked in clean areas. Keep it under 60 lines. Say "No accuracy or usability gaps found" only if that is true after checking everything in scope.
+Return your report in your reply. For each finding, give the node ID, problem, evidence and fix, and tag it **major** (a builder would build the wrong thing, or a reader would be misled) or **minor** (polish). Say what you checked in clean areas. Keep it under 60 lines. Say "No accuracy or usability gaps found" only if that is true after checking everything in scope.

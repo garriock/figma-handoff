@@ -131,9 +131,9 @@ Write the brief content, captions and native annotations. Read [accessibility.md
 
 ### 8. Verify
 
-Run `scripts/bind.js` once more as a dry run on the whole page, then `scripts/audit.js`, both read-only, and record the numbers. Any exact match the dry run still finds is a failed check. Fills, strokes, spacing and radius should be bound wherever the system has a token, so report each percentage under 100 with the reason, such as a near miss kept as drift. Compare screenshots per state and breakpoint. Then run a fresh [reviewer](references/roles/reviewer.md) that sees neither your reasoning nor the builders'. Allow at most two rounds per checkpoint. Review once after the first row and once at the end.
+Run `scripts/bind.js` once more as a dry run on the whole page, then `scripts/audit.js`, both read-only, and record the numbers. Any exact match the dry run still finds is a failed check. Fills, strokes, spacing and radius should be bound wherever the system has a token, so report each percentage under 100 with the reason, such as a near miss kept as drift. Compare screenshots per state and breakpoint. Then run a fresh [reviewer](references/roles/reviewer.md) that sees neither your reasoning nor the builders'. Review once after the first row and once at the end, with at most two rounds per checkpoint.
 
-Fix what it finds. If the final round still has findings after you fix them, say that the last pass was verified by you, not independently.
+Fix what it finds, and check each fix by reading the file back, not by one screenshot. **If the first round led to any fixes, a second round is required:** run a new reviewer, never the first one again, and give it the list of fixes to re-check. Fixes are where a review finds the most, because nobody independent has seen them yet. In one real run the second round found two major problems, both in fixes from the first round, and one of them had been reported as done when it hadn't held. Skip the second round only when the first came back clean. If the second round still has findings after you fix them, say that the last pass was verified by you, not independently.
 
 If subagents aren't available, do the work in sequence and tell the user that the review was not independent.
 

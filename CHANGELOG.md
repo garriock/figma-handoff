@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1, 11 November 2026
+
+### Changed
+
+- A second review round is now required whenever the first one led to fixes. It runs as a new reviewer, given the list of fixes to re-check. Skip it only when the first round comes back clean. In a real run the second round found two major problems, both in fixes from the first round.
+- Fixes are checked by reading the file back, not by one screenshot.
+- The reviewer tags each finding major or minor.
+
 ## 0.5.0, 11 November 2026
 
 ### Added
