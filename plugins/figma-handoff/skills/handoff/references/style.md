@@ -49,7 +49,7 @@ Keep the kit small, and generate it inside the target file with role-based names
 | `Doc/Cursor` | Marker on a click target |
 | `Doc/Focus` | Focus order marker, overlay frames only |
 
-The `Doc/` prefix goes only on nodes that show no label on the canvas, such as text, lines and shapes. Frames directly under a section or the page need plain names, because readers see them. The prefix, the Brief name and `setSharedPluginData('handoff', 'owner', 'skill')` tell update runs and the audit which nodes this skill owns.
+The `Doc/` prefix goes only on nodes that show no label on the canvas, such as text, lines and shapes. Frames directly under a section or the page need plain names, because readers see them. `setSharedPluginData('handoff', 'owner', 'skill')` marks everything this skill made, screens and components included, so update runs know what they may change. Documentation chrome is marked separately: the `Doc/` prefix, `Flow:` connectors, and `setSharedPluginData('handoff', 'kind', 'doc')` on chrome frames such as the brief. The audit and the binding sweep skip chrome only, never the screens and components.
 
 ## Avoid
 

@@ -19,7 +19,8 @@ Rules:
 
 - Inspect the page first. Never move, rename or delete work you didn't create.
 - Build screens from linked instances. Check the library-first table in `design-system.md` before making anything local: a component with a match is always the library one, even when the code restyles it, and custom content goes in the slot of the library container the code uses. Draw by hand only what no library covers, and say so in the layer name and description.
-- Bind colours, spacing, radius and text to the design system. Follow the join table, and don't guess at a token.
+- Bind colours, spacing, radius, stroke widths and text to the design system as you create each node, using the binding table in `design-system.md`. Import the variable or style once per script and bind it: `setBoundVariable` for gaps, padding, radius and stroke width, `setBoundVariableForPaint` for colours, `setTextStyleIdAsync` for text. A literal is allowed only where the table says the code hardcodes a value with no token.
+- After your writes, run `scripts/bind.js` on your unit with `APPLY = true` and the table's `HINTS`. Fix any near miss it reports by setting the value the code renders, then run it again. Report what it couldn't bind.
 - Use copy exactly as it appears in the inventory, and real content instead of sample text.
 - Set images with `upload_assets` and target node IDs.
 - Text is plain text nodes, never framed or grouped. Frame and section names are what readers see, so keep them short and in plain words.
@@ -31,4 +32,4 @@ Rules:
 
 Check your own unit before replying. Take a screenshot at a readable size, then fix clipped or overlapping text, leftover sample text, and anything that differs from its reference.
 
-Reply in 25 lines at most: node IDs, one line per screen, deliberate differences from the reference, and anything you couldn't do.
+Reply in 25 lines at most: node IDs, one line per screen, the sweep's counts, deliberate differences from the reference, and anything you couldn't do.

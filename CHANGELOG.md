@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.0, 11 November 2026
+
+### Added
+
+- `scripts/bind.js`, a binding sweep run after each builder unit. It binds every raw colour, gap, padding, radius, stroke width and text that equals a design system token exactly, including in the local components a screen uses. It reports ties and near misses instead of guessing. On a real handoff page it found 168 values the build had left unbound.
+- A binding table in the design system stage, written from the code, so ties such as several white surfaces resolve the way the code does.
+- The audit reports how many strokes, gaps, paddings and radii are bound, as well as fills.
+- The library keys, scale rules and binding table are saved to `docs/handoff/design-system.md` in the repo, and the next run starts from them instead of rediscovering the system.
+
+### Fixed
+
+- The audit skipped every screen and component the skill had built, because it treated "made by this skill" as documentation chrome. Its bound percentages only counted what the skill hadn't made. Chrome now has its own `kind: doc` marker, alongside the `Doc/` and `Flow:` names.
+
 ## 0.4.0, 9 November 2026
 
 ### Added

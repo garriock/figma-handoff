@@ -33,6 +33,7 @@ One page on a dark canvas, readable by zooming out:
 - **Brief,** a white card on the left: who it's for, what is real and what is faked, what it does, and up to seven open decisions with defaults.
 - **Scenario rows** in the middle, one per user situation. They hold editable screens built from your components where you have them, with a one-line caption under each and plenty of space between.
 - **Labelled arrows** from each screen to the next, naming the action, such as "Clicks the row".
+- **Tokens bound, not pasted.** After each part is built, a sweep binds every colour, gap, padding, radius and text value that matches your system exactly, and lists the ones that are close but not equal as drift.
 - **Library components wherever the library has them,** checked against everything the code imports, including containers such as Dialog, Drawer and menus. Custom content goes inside the library container rather than in a lookalike.
 - **Key components and Screen parts** on the right, packed into compact columns. Specs live in each component's description, so Dev Mode shows them on every instance.
 - **A few native annotations,** only where something is faked or missing and would get built wrong, and at most two per screen. Accessibility gaps go in one annotation on the focus order row.

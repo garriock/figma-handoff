@@ -63,6 +63,9 @@ Figma limits MCP calls by seat, and a limit error stops the whole run. A Full se
 | Library search | `search_design_system` can be limited, at about 20 queries a call. Fall back to reading the library file directly |
 | Library lists | `get_libraries` can miss libraries that still import by key |
 | Tokens | The same name can resolve to different values, so bind by resolved value |
+| Library variables | Import them with `importVariableByKeyAsync` in parallel. One at a time, a few hundred took a minute and dropped the connection. Filter by name first, and leave raw palettes out |
+| Library text styles | A plugin can't list them. Import by key from `search_design_system` results, or read the styles already used on the page |
+| Local masters | Screens built from local components keep their raw values in the masters. Sweep the masters, not just the screens |
 
 ## Fonts
 

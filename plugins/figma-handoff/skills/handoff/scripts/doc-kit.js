@@ -204,6 +204,7 @@ async function briefPage(b, sans) {
   const width = 1440 - CANVAS.card * 2;
   const page = stack('Brief', 'VERTICAL', SPACE.section);
   page.setSharedPluginData('handoff', 'owner', 'skill');
+  page.setSharedPluginData('handoff', 'kind', 'doc');
   page.fills = solid(SURFACE);
   page.paddingTop = page.paddingBottom = page.paddingLeft = page.paddingRight = CANVAS.card;
   page.cornerRadius = CANVAS.radius;

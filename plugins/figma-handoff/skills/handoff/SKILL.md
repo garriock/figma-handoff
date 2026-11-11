@@ -54,7 +54,7 @@ The designer's change wins over the code unless they say otherwise. Record it as
 
 Keep state in `<repo>/.handoff/<feature-slug>/`, and add `.handoff/` to `.gitignore` if the user agrees. It holds the plan, reference captures, `state.json`, `progress.md` and `figma-snapshot.json`. Re-read `progress.md` and run `scripts/run_state.py report` after any context compaction.
 
-The inventory is the one lasting output in the repo: `docs/handoff/<feature-slug>/inventory.md`. Write it, but leave committing to the user.
+Two files last in the repo: the inventory at `docs/handoff/<feature-slug>/inventory.md`, and the repo's binding table at `docs/handoff/design-system.md`, which later runs start from. Write them, but leave committing to the user.
 
 ## Pipeline
 
@@ -93,6 +93,8 @@ Propose matches by code syntax, then by normalised name. Confirm each by resolve
 
 Then run the library-first check in [design-system.md](references/design-system.md): search the library for every component the code imports, containers included, and record a match or "none" for each. The builder may not create a local component for anything that has a match.
 
+Finish with the binding table in [design-system.md](references/design-system.md): every colour, spacing, radius and type value the prototype renders, mapped to the token the code names. It decides ties that a value can't, such as several white surfaces.
+
 **Stop if** names and values disagree on something that affects the screens, or several tokens share a value and you can't tell which is meant.
 
 ### 5. Inventory the prototype
@@ -108,6 +110,8 @@ Then write the plan and show the user a summary of ten lines at most: scenarios,
 Read [file-layout.md](references/file-layout.md), [style.md](references/style.md) and [figma-rules.md](references/figma-rules.md). Build in this order: brief, key components, first scenario row. Review that first, because mistakes are cheapest to fix here. Then build the remaining rows.
 
 Run one [builder](references/roles/builder.md) at a time. Concurrent writers race on positions and node IDs. Use `scripts/doc-kit.js` for documentation chrome, so every unit looks the same.
+
+After each unit, run `scripts/bind.js` on it: a dry run first, then again with `APPLY = true`. It binds every raw value that equals a token exactly, including in the local components the unit's screens use, and reports ties and near misses. Fill its `HINTS` from the binding table so ties resolve the way the code does. Never bind a near miss: a 32 radius where the system has 36 is drift for the report, or a builder error to fix by hand.
 
 Follow the design system state from stage 3:
 
@@ -127,7 +131,7 @@ Write the brief content, captions and native annotations. Read [accessibility.md
 
 ### 8. Verify
 
-Run `scripts/audit.js` through a read-only `use_figma` call and record the numbers. Compare screenshots per state and breakpoint. Then run a fresh [reviewer](references/roles/reviewer.md) that sees neither your reasoning nor the builders'. Allow at most two rounds per checkpoint. Review once after the first row and once at the end.
+Run `scripts/bind.js` once more as a dry run on the whole page, then `scripts/audit.js`, both read-only, and record the numbers. Any exact match the dry run still finds is a failed check. Fills, strokes, spacing and radius should be bound wherever the system has a token, so report each percentage under 100 with the reason, such as a near miss kept as drift. Compare screenshots per state and breakpoint. Then run a fresh [reviewer](references/roles/reviewer.md) that sees neither your reasoning nor the builders'. Allow at most two rounds per checkpoint. Review once after the first row and once at the end.
 
 Fix what it finds. If the final round still has findings after you fix them, say that the last pass was verified by you, not independently.
 

@@ -9,7 +9,9 @@ const DEFAULT_NAME = /^(frame|group|rectangle|ellipse|vector|line|text|component
 function isDoc(node) {
   for (let n = node; n && n.type !== 'PAGE'; n = n.parent) {
     if (n.name && n.name.startsWith('Doc/')) return true;
-    if (n.type !== 'SECTION' && n.getSharedPluginData('handoff', 'owner') === 'skill') return true;
+    if (n.name && n.name.startsWith('Flow: ')) return true;
+    if (n.getSharedPluginData('handoff', 'kind') === 'doc') return true;
+    if (n.name === 'Brief' && n.parent && n.parent.type === 'PAGE') return true; // Briefs from before the kind marker.
   }
   return false;
 }
@@ -30,7 +32,8 @@ function labelNoise(page) {
 function auditNodes(nodes) {
   const r = {
     nodes: 0, leafs: 0, inInstances: 0,
-    paints: 0, boundPaints: 0,
+    paints: 0, boundPaints: 0, strokePaints: 0, boundStrokePaints: 0,
+    dims: 0, boundDims: 0,
     text: 0, styledText: 0,
     defaultNames: [], placeholderText: [], overflowingText: [], imageFrames: [], offFontText: [],
   };
@@ -60,6 +63,34 @@ function auditNodes(nodes) {
           if (cover > 0.8) r.imageFrames.push(n.id);
         }
       });
+    }
+
+    // Inside an instance the library owns the values, so count only what this file controls.
+    let inInstance = false;
+    for (let p = n.parent; p && p.type !== 'PAGE'; p = p.parent) if (p.type === 'INSTANCE') { inInstance = true; break; }
+    // Sections are canvas chrome and instances take their values from the library, so neither counts.
+    if (!inInstance && n.type !== 'SECTION' && n.type !== 'INSTANCE') {
+      const bound = n.boundVariables || {};
+      const dims = [];
+      if ('layoutMode' in n && n.layoutMode !== 'NONE' && n.layoutMode !== 'GRID') {
+        if (n.primaryAxisAlignItems !== 'SPACE_BETWEEN') dims.push('itemSpacing');
+        dims.push('paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom');
+      }
+      if ('cornerRadius' in n && n.type !== 'TEXT' && n.type !== 'COMPONENT_SET') {
+        if (n.cornerRadius === figma.mixed) dims.push('topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius');
+        else dims.push(bound.topLeftRadius ? 'topLeftRadius' : 'cornerRadius');
+      }
+      if ('strokeWeight' in n && Array.isArray(n.strokes) && n.strokes.length && n.strokeWeight !== figma.mixed) dims.push('strokeWeight');
+      for (const f of dims) {
+        if (typeof n[f] !== 'number' || n[f] === 0) continue;
+        r.dims += 1;
+        if (bound[f] || (f === 'strokeWeight' && (bound.strokeTopWeight || bound.strokeLeftWeight))) r.boundDims += 1;
+      }
+      if ('strokes' in n && Array.isArray(n.strokes)) for (const paint of n.strokes) {
+        if (paint.type !== 'SOLID' || paint.visible === false) continue;
+        r.strokePaints += 1;
+        if ((paint.boundVariables && paint.boundVariables.color) || n.strokeStyleId) r.boundStrokePaints += 1;
+      }
     }
 
     if (n.type === 'TEXT') {
@@ -140,6 +171,8 @@ for (const page of pages) {
     designNodes: r.nodes,
     leafLayersInInstancesPct: share(r.inInstances, r.leafs),
     fillsBoundPct: share(r.boundPaints, r.paints),
+    strokesBoundPct: share(r.boundStrokePaints, r.strokePaints),
+    spacingRadiusBoundPct: share(r.boundDims, r.dims), // Gaps, padding, radius and stroke widths outside instances.
     textWithStylePct: share(r.styledText, r.text),
     defaultNames: r.defaultNames.slice(0, 50),
     placeholderText: r.placeholderText.slice(0, 50),

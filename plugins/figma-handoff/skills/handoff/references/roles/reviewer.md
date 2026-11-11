@@ -21,7 +21,7 @@ Report only what affects accuracy or usability, most severe first:
 - **Fakes reading as facts.** A mocked or stubbed item shown as settled behaviour, or a reality line that doesn't match the inventory. Treat these as the most serious findings.
 - **Behaviour or copy that differs from the code.** Quote both and cite `path:line`.
 - **Missing states, screens or scenarios** that the code has.
-- **Hand-drawn parts** where a component exists, and hardcoded values where a token exists.
+- **Hand-drawn parts** where a component exists, and hardcoded values where a token exists. Run `scripts/bind.js` as a dry run on your scope: any exact match it finds is a finding, and so is a near miss the inventory doesn't list as drift.
 - **Flaws copied as design,** such as clipped content or nested scrollers.
 - **Clutter,** which counts as a defect. This includes a brief over one page, too many bullets, decisions, captions or notes, drawn tables or redlines, code paths on the canvas, more than two annotations on a screen, annotations that aren't about something being faked or missing, or a spec annotation that belongs in a component description. Name the node and say what to cut. Never ask for more text, because extra detail belongs in the inventory.
 - **Label noise.** Look at each row at 100%. Any frame label that is a layer name rather than plain words, framed text, or labels colliding with content. Row titles repeated as text.

@@ -4,6 +4,8 @@ Detect. Never assume a framework, library or token format. Everything below is a
 
 ## In code
 
+If `docs/handoff/design-system.md` exists, a previous run already joined this repo to its library. Start from it: library keys, the scale rules, the binding table and its hints. Check it against the current code and library rather than rebuilding it, and update it at the end of the run.
+
 Read the repo's own documentation first: `DESIGN.md`, `AGENTS.md`, `CLAUDE.md`, `README`, and any design system docs. Stated rules beat anything you infer.
 
 | Look for | Where |
@@ -55,6 +57,22 @@ When the library's version looks different from the prototype, such as a differe
 
 Read a component's defaults from its source, not just the props passed at the call site. A wrong variant is easy to miss.
 
+## Binding table
+
+The join maps tokens. The builder also needs the reverse: for each value the prototype renders, the token to bind. Write it from the code, not from values, because values tie. In one real library, white was `base/background`, `base/card`, `base/popover` and `base/sidebar`, and only the code's `bg-card` said which.
+
+| Code | Renders | Bind to | Where |
+|---|---|---|---|
+| `bg-card` | `#FFFFFF` | `base/card` | Dialog surface |
+| `gap-3` | 12 | `spacing/3` | Option list |
+| `text-sm` | Inter 14/20 | Paragraph Small text style | Option labels |
+
+Map the code's utility scale to the library's naming once, such as `gap-3` to `spacing/3` and `rounded-md` to `border-radius/rounded-md`, and record the rule rather than every row. Text styles are often missing from code; match them by family, weight, size, line height and letter spacing, and record the style key, because a plugin can't list library styles.
+
+Turn each tie into a `HINTS` entry for `scripts/bind.js`, such as `'fill:#FFFFFF': 'base/card'`. A hint is file-wide, so when one value needs different tokens in different places, bind those by hand at build time and let the sweep handle the rest.
+
+Library components carry the system's real usage. Instances already on the page show which collection the file binds, and the sweep prefers it.
+
 ## Report drift
 
 Group drift into four classes:
@@ -72,4 +90,6 @@ If a production app exists alongside the prototype, its measured numbers record 
 
 ## Output
 
-Save `design-system.md` in the run folder with the sources found, the system state from the skill's table, the join table and the drift report. Put a one-line summary in the inventory.
+Save `design-system.md` in the run folder with the sources found, the system state from the skill's table, the join table, the binding table and the drift report. Put a one-line summary in the inventory.
+
+The library keys, scale rules, binding table and hints hold for every feature in the repo, so also save them to `docs/handoff/design-system.md`, and leave committing to the user. Drift and run details stay in the run folder.
